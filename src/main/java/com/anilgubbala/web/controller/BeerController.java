@@ -45,7 +45,6 @@ public class BeerController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void handleDeleteBeer(@PathVariable("beerId") UUID beerId) {
         beerService.deleteBeerById(beerId);
-
     }
 
 }
