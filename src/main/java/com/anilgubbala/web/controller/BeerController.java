@@ -2,6 +2,7 @@ package com.anilgubbala.web.controller;
 
 import com.anilgubbala.services.BeerService;
 import com.anilgubbala.web.model.BeerDto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,17 +26,17 @@ public class BeerController {
     }
 
     @PostMapping
-    public ResponseEntity<BeerDto> saveBeer(@RequestBody BeerDto beerDto) {
+    public ResponseEntity<BeerDto> saveBeer(@Valid @RequestBody BeerDto beerDto) {
 
         BeerDto savedDto = beerService.saveNewBeer(beerDto);
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Location", "http://localhost:8080/api/v1/beer/" + savedDto.getId().toString());
+        headers.set("Location", "/api/v1/beer/" + savedDto.getId().toString());
 
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity<BeerDto> handleUpdateBeer(@PathVariable("beerId") UUID beerId,@RequestBody BeerDto beerDto) {
+    public ResponseEntity<BeerDto> handleUpdateBeer(@PathVariable("beerId") UUID beerId,@Valid @RequestBody BeerDto beerDto) {
 
         beerService.updateBeer(beerId, beerDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
